@@ -1,0 +1,252 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+ul,
+ol,
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+body {
+	background-color: #88abff;
+}
+.wrapper {
+	display: grid;
+	margin: 50px;
+	grid-template-columns: repeat(auto-fill, 265px);
+	gap: 25px;
+	li {
+		height: 250px;
+		border-radius: 5px;
+		padding: 15px 20px 20px;
+		background-color: #fff;
+		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+		&.add_box {
+			cursor: pointer;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			.icon {
+				width: 78px;
+				height: 78px;
+				color: #88abff;
+				font-size: 40px;
+				border-radius: 50%;
+				border: 2px dashed #88abff;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				i {
+					color: #888989;
+					cursor: pointer;
+					font-size: 23px;
+				}
+			}
+			p {
+				font-weight: bold;
+				color: #88abff;
+				margin-top: 20px;
+			}
+		}
+	}
+	.note {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		.details {
+			max-height: 165px;
+			overflow-y: auto;
+			//    165px의 높이가 넘치면 스크롤을 생성합니다
+			&::-webkit-scrollbar,
+			.popup textarea::-webkit-scrollbar {
+				width: 0;
+			}
+			&:hover::-webkit-scrollbar,
+			.popup textarea:hover::-webkit-scrollbar {
+				width: 5px;
+				background-color: #888989;
+				border-radius: 25px;
+				// &:hover::-webkit-scrollbar-thumb
+				&-thumb {
+					background-color: #88abff;
+					border-radius: 25px;
+				}
+			}
+			p {
+				font-size: 22px;
+				font-weight: bold;
+			}
+			span {
+				display: block;
+				color: #575757;
+				margin-top: 5px;
+				font-size: 16px;
+			}
+		}
+		.bottom_content {
+			padding-top: 10px;
+			border-top: 1px solid #ccc;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			span {
+				color: #6d6d6d;
+				font-size: 14px;
+			}
+			.settings {
+				position: relative;
+				i {
+					color: #6d6d6d;
+					cursor: pointer;
+					font-size: 15px;
+				}
+				.menu {
+					position: absolute;
+					z-index: 1;
+					bottom: 0;
+					right: -5px;
+					padding: 5px 0;
+					background-color: #fff;
+					border-radius: 4px;
+					box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.15);
+					transform: scale(0);
+					transform-origin: bottom right;
+					transition: transform 0.2s ease;
+					li {
+						display: flex;
+						align-items: center;
+						height: 25px;
+						font-size: 16px;
+						padding: 17px 15px;
+						cursor: pointer;
+						justify-content: flex-start;
+						i {
+							padding-right: 8px;
+						}
+						&:hover {
+							background-color: #000;
+							color: #fff;
+							i {
+								color: #fff;
+							}
+						}
+					}
+				}
+				&.show {
+					.menu {
+						transform: scale(1);
+					}
+				}
+			}
+		}
+	}
+}
+
+.popup_box {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+	&,
+	.popup {
+		opacity: 0;
+		pointer-events: none;
+		// 해당요소의 포인터 이벤트(클릭이나 터치등의)
+		//비활성화 합니다
+		transition: all 0.25s ease;
+		transform: translate(-50%, -50%) scale(0);
+	}
+	&.show,
+	&.show .popup {
+		opacity: 1;
+		pointer-events: auto;
+		transform: translate(-50%, -50%) scale(1);
+	}
+	.popup {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 3;
+		width: 100%;
+		max-width: 400px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform: translate(-50%, -50%);
+		.content {
+			background-color: #fff;
+			width: 100%;
+			border-radius: 5px;
+			box-sizing: 0 0 15px rgba(0, 0, 0, 0.1);
+			header {
+				padding: 15px 25px;
+				border-bottom: 1px solid #ccc;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				p {
+					font-size: 20px;
+					font-weight: bold;
+				}
+				i {
+					transform: rotate(45deg);
+					font-size: 23px;
+					color: #8b8989;
+					cursor: pointer;
+				}
+			}
+			form {
+				margin: 15px 25px 35px;
+				.row {
+					margin-bottom: 20px;
+					label {
+						font-size: 18px;
+						display: block;
+						margin-bottom: 6px;
+					}
+					// where유사클래스 : 여러 선택자를 그룹화 하여
+					//스타일을 적용할때 사용합니다
+					//스타일 규칙의 우선순위를 무시할수있습니다
+					:where(input, textarea) {
+						height: 50px;
+						width: 100%;
+						outline: none;
+						border: 1px solid #999;
+						font-size: 17px;
+						padding: 0 15px;
+						border-radius: 4px;
+						&:focus {
+							box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+						}
+					}
+					textarea {
+						height: 150px;
+						resize: none;
+						padding: 8px 15px;
+					}
+				}
+			}
+			button {
+				width: 100%;
+				height: 50px;
+				color: #fff;
+				outline: none;
+				border: none;
+				background-color: #88abff;
+				font-size: 17px;
+				cursor: pointer;
+				border-radius: 4px;
+			}
+		}
+	}
+}
